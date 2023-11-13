@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Seller Dashboard</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    /* Add your existing styles here */
+
+    /* Custom styles for the tabs */
+    .nav-tabs {
+        display: flex;
+        justify-content: space-between;
+        background-color: #eee; /* Add your background color */
+        padding: 10px;
+    }
+
+    .nav-tab {
+        padding: 15px; /* Adjust the padding as needed */
+        margin: 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-tab:hover {
+        background-color: #ddd; /* Add your hover background color */
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-success bg-success">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">Flowers & Gifts</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+		        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="#products">Products</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#orders">Inventory</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#contact">Contact</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#service">Service</a>
+				</li>
+			</ul>
+			<div class="container">
+				<li class="nav-item">
+					<a class="nav-link" href="/logout">Logout</a>
+				</li>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<!-- Content -->
+<nav>
+	<div class="nav nav-tabs" id="nav-tab" role="tablist">
+		<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Product</button>
+		<button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Inventory</button>
+		<button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false" >Promo Code</button>
+	</div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+		<h2>Products</h2>
+		<div class="container">
+			<div class="form-group">
+
+
+		<!-- Product Form -->
+		<form th:action="@{/seller/saveFlowers}" th:object="${products}" th:method="post" enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="productsName" class="form-label">Product Name</label>
+				<input type="text" class="form-control" th:field="*{productsName}" id="productsName">
+			</div>
+			<div class="mb-3">
+				<label for="productsPrice" class="form-label">Price</label>
+				<input type="number" class="form-control" name="productsPrice" th:field="*{productsPrice}" id="productsPrice">
+			</div>
+			<div class="mb-3">
+				<label for="productsDescription" class="form-label">products Description</label>
+				<textarea type="text" class="form-control" name="productsPrice" th:field="*{productsDescription}" id="productsDescription"></textarea>
+			</div>
+			<div class="mb-3" >
+				<label for="giftType" class="form-label">Gift Type:</label>
+				<select class="form-select"  name="giftType">
+					<option value="birthday">Birthday</option>
+					<option value="anniversary">Anniversary</option>
+					<option value="graduation">Graduation</option>
+					<option value="wedding">Wedding</option>
+					<option value="baby-shower">Baby Shower</option>
+					<option value="holiday">Holiday</option>
+					<!-- Add more options based on your actual gift types -->
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="giftType" class="form-label">Select Gift Type</label>
+				<select class="form-select" id="giftType" name="giftType" th:field="*{giftType}">
+					<option value="flower">Flowers</option>
+					<option value="cake">Cake</option>
+					<option value="chocolates">Chocolate</option>
+					<option value="jewelry">Jewelry</option>
+					<option value="greeting-cards">Greeting Cards</option>
+					<option value="plants">Plants</option>
+					<option value="gift-baskets">Gift Baskets</option>
+					<option value="personalized-gifts">Personalized Gifts</option>
+					<!-- Add more options as needed -->
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="images" class="form-label">Product Image</label>
+				<input class="form-control" type="file" name="images" id="images" multiple="multiple">
+			</div>
+			<button type="submit" class="btn btn-primary">Add Product</button>
+		</form>
+
+			</div>
+		</div>
+		</div>
+
+
+</div>
+
+
+
+	<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0"><h2>Product Table</h2>
+<div class="container">
+		<table>
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Category</th>
+				<th>Gift Type</th>
+				<th>Images</th>
+			</tr>
+			</thead>
+			<tbody>
+			<!-- Add a row for each product -->
+			<tr th:each="productlist:${product}">
+				<td th:text="${productlist.id}"><!-- Display product ID here --></td>
+				<td th:text="${productlist.productsName}">><!-- Display product name here --></td>
+				<td th:text="${productlist.productsPrice}">><!-- Display product price here --></td>
+				<td th:text="${productlist.productsCategory}">><!-- Display product category here --></td>
+				<td th:text="${productlist.giftType}">><!-- Display gift type here --></td>
+				<td >
+					<img th:src="@{/customer/Flower-images/{id}(id=${productlist.id})}" class="img-thumbnail rounded-circle " style="max-height: 100px">
+
+					><!-- Display images here --></td>
+			</tr>
+			<!-- Repeat the above row structure for each product -->
+			</tbody>
+		</table>
+</div>
+</div>
+	<div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
+		<h2>Generate Coupons</h2>
+		<div class="container mt-5">
+			<form th:object="${Promocode}" th:action="@{/seller/generate-coupon}" method="post">
+				<div class="form-group">
+					<label for="couponCode">Coupon Code:</label>
+					<input type="text" id="couponCode" name="couponCode" th:field="*{couponCode}" class="form-control" placeholder="Enter coupon code">
+				</div>
+				<div class="form-group">
+					<label for="discountPercentage">Discount Percentage:</label>
+					<input type="number" id="discountPercentage" th:field="*{discountPercentage}" class="form-control" placeholder="Enter discount percentage">
+				</div>
+				<button type="submit" class="btn btn-primary">Generate Coupon</button>
+			</form>
+		</div>
+
+	</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
