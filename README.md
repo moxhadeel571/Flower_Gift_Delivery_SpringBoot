@@ -65,7 +65,8 @@ The Flower & Gift Booking System is dedicated to providing a delightful shopping
 3. Build and run the application:
 
    ```bash
-   mvn spring-boot:run
+   ./gradlew bootRun
+
    ```
 
 4. Access the app in your web browser at `http://localhost:8080`.
